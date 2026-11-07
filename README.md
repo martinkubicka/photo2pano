@@ -6,8 +6,8 @@
 </p>
 
 <p align="center">
-  <a href="#">Paper (TODO)</a> &nbsp;•&nbsp;
-  <a href="#">Project page &amp; dataset (TODO)</a> &nbsp;•&nbsp;
+  <a href="#">Paper (TBD)</a> &nbsp;•&nbsp;
+  <a href="https://cphoto.fit.vutbr.cz/photo2pano/">Project page &amp; dataset</a> &nbsp;•&nbsp;
   <a href="#trained-models">Trained models</a> &nbsp;•&nbsp;
   <a href="#citation">Citation</a>
 </p>
@@ -133,7 +133,7 @@ Every sample consists of three files in one directory:
 original datasets ([GeoPose3K](https://cphoto.fit.vutbr.cz/geoPose3K/), LandscapeAR, Venturi) into this
 layout, given the rendered panoramas; `preprocessing/augment.py` writes the six augmented copies of every
 training pair. `splits/` lists the samples used in the paper (augmented training and validation samples,
-GeoPose3K test split, Venturi). The data are available on the project page (**TODO**: link).
+GeoPose3K test split, Venturi). The data are available on the [project page](https://cphoto.fit.vutbr.cz/photo2pano/).
 
 ## Evaluation
 
@@ -221,4 +221,4 @@ The models are fine-tuned from the PE-Spatial-T encoder of the
 [Perception Encoder](https://github.com/facebookresearch/perception_models), which is also released under
 Apache 2.0. 
 The dataset (photos, splits and rendered panoramas) is distributed separately under its own
-license; see the project page.
+license; see the [project page](https://cphoto.fit.vutbr.cz/photo2pano/).
