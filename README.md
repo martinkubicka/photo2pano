@@ -32,7 +32,7 @@ at the camera position, and predicts the camera **yaw, pitch and roll** and, opt
   of the photo in the panorama by attention.
 - **Accurate where pipelines fail.** On the GeoPose3K test split, the mean/median orientation error is
   **11.9° / 2.6°**, compared with 39.3° / 3.5° for CF-VCC-2011 (given the ground-truth FoV), 41.4° / 6.3°
-  for our reimplementation of the m3D silhouette matching and 62.6° / 47.8° for the best generic matcher.
+  for our reimplementation of the m3D silhouette matching and 63.6° / 48.5° for the best generic matcher.
 - **Letterbox padding matters.** Without a mask, the cross-attention focuses on the black padding of resized
   photos; masking it as attention keys halves the one-stage median error (9.2° → 4.6° on GeoPose3K).
 - **Zoom-in refinement.** An optional second stage re-estimates the orientation on a 2× magnified 180°
@@ -57,15 +57,18 @@ The optional second stage has the same architecture and refines the orientation 
 **GeoPose3K test split** (516 photos): orientation error over all photos and the fraction of photos below
 each error threshold.
 
-| Method | FoV given | Mean ↓ | Median ↓ | < 5° ↑ | < 10° ↑ | < 20° ↑ |
-|---|:---:|---:|---:|---:|---:|---:|
-| MatchAnything (best generic matcher) | – | 62.6° | 47.8° | – | – | 28.7% |
-| m3D (our reimplementation) | – | 41.4° | 6.3° | – | – | 60.1% |
-| CF-VCC-2011 | ground truth | 39.3° | 3.5° | 51.6% | 54.1% | 59.5% |
-| Photo2Pano, one stage | – | 16.0° | 4.6° | 51.9% | 72.1% | 81.0% |
-| **Photo2Pano, two stages** | – | **11.9°** | **2.6°** | **74.8%** | **85.5%** | **89.7%** |
+| Method | FoV given | Mean ↓ | Median ↓ | < 1° ↑ | < 5° ↑ | < 10° ↑ | < 20° ↑ |
+|---|:---:|---:|---:|---:|---:|---:|---:|
+| MatchAnything (best generic matcher) | – | 63.6° | 48.5° | 0.0% | 2.1% | 11.8% | 30.6% |
+| m3D (our reimplementation) | – | 41.4° | 6.3° | 11.6% | 46.3% | 55.6% | 60.1% |
+| CF-VCC-2011 | ground truth | 39.3° | 3.5° | **≈39%** | 51.6% | 54.1% | 59.5% |
+| Photo2Pano, one stage | – | 16.0° | 4.6° | 5.2% | 51.9% | 72.1% | 81.0% |
+| **Photo2Pano, two stages** | – | **11.9°** | **2.6°** | 11.8% | **74.8%** | **85.5%** | **89.7%** |
 
-Below 1°, the FoV-aware pipelines remain more precise (about 39% of the photos vs. 11.8% for Photo2Pano).
+MatchAnything is the best of the generic matchers that we evaluated with their released weights
+(DUSt3R, MASt3R, MatchAnything; see the paper). Below 1°, the FoV-aware pipelines remain more precise
+(about 39% of the photos for CF-VCC-2011 and LandscapeAR); m3D, which does not receive the FoV, places
+11.6% of the photos within 1°, on par with Photo2Pano (11.8%).
 
 **Venturi** (12 video sequences, 3,117 frames): the two-stage model reaches **7.4° / 1.8°** (mean / median
 over all frames), compared with a mean of 12.4° for CF-VCC-2011; the pipelines with m3D verification,
@@ -79,7 +82,8 @@ a higher orientation error.
   <img src="assets/results.png" width="100%" alt="Cumulative errors and selective prediction">
 </p>
 <p align="center"><sub>
-  (a, b) Cumulative orientation error. (c, d) Mean error over the most confident fraction of the images.
+  (a, b) Cumulative orientation error; on GeoPose3K (a) also m3D (our reimplementation) and CF-VCC-2011.
+  (c, d) Mean error over the most confident fraction of the images.
 </sub></p>
 
 ## Installation
