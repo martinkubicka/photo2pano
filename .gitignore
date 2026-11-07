@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pth
+!weights/*.pth
+checkpoints/
+data/
+results/
+*.npz
+.DS_Store
